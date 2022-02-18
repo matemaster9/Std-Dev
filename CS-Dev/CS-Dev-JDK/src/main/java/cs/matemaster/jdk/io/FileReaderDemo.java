@@ -1,11 +1,8 @@
 package cs.matemaster.jdk.io;
 
-import cs.matemaster.log.SysLogUtil;
+import cs.matemaster.jdk.util.StdioUtil;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Paths;
 
 /**
@@ -15,6 +12,21 @@ import java.nio.file.Paths;
  */
 public class FileReaderDemo {
     public static void main(String[] args) {
-        SysLogUtil.info("JDK测试");
+        File text = Paths.get(StdioUtil.getResourcesIdeaPath(), "text", "孤勇者.txt").toFile();
+        FileReader fileReader = null;
+        try {
+            fileReader = new FileReader(text);
+            int result = 0;
+            char[] chars = new char[512];
+            while ((result = fileReader.read(chars)) != -1) {
+                System.out.println(result);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            StdioUtil.autoClose(fileReader);
+        }
     }
 }
