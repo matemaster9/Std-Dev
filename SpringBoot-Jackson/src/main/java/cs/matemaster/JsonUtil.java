@@ -2,9 +2,13 @@ package cs.matemaster;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * @Description:
@@ -13,7 +17,7 @@ import lombok.NoArgsConstructor;
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class JsonUtil {
-    private static final ObjectMapper mapper = new ObjectMapper();
+    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
     /**
      * JSON序列化
@@ -25,7 +29,7 @@ public class JsonUtil {
         if (obj == null) {
             return null;
         }
-        ObjectMapper objectMapper = mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        ObjectMapper objectMapper = OBJECT_MAPPER.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         String result;
         try {
             result = objectMapper.writeValueAsString(obj);
@@ -36,10 +40,36 @@ public class JsonUtil {
         return result;
     }
 
-    public static void main(String[] args) {
+    public static <T> T deserialize(String jsonData, TypeReference<T> reference) {
+        if (jsonData == null || jsonData.length() == 0) {
+            return null;
+        }
+
+        try {
+            return OBJECT_MAPPER.setSerializationInclusion(JsonInclude.Include.NON_NULL).readValue(jsonData, new TypeReference<T>() {
+            });
+        } catch (JsonProcessingException e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+    public static void main(String[] args) throws JsonProcessingException {
         Student student = new Student("201808020125", "MateMaster", MajorEnum.COMPUTER_SCIENCE);
         String serialize = serialize(student);
         System.out.println(serialize);
+
+        // 反序列化演示
+        SysUser sysUser = new SysUser();
+        sysUser.setUid(1L);
+        sysUser.setName("MateMaster");
+        sysUser.setPassword("cmbChina9!");
+        sysUser.setRegisterDate(new Date());
+        sysUser.setBirth(LocalDateTime.now());
+
+        SysUser result = OBJECT_MAPPER.readValue(serialize(sysUser), SysUser.class);
+
+        System.out.println(result);
     }
 
     /**
@@ -52,6 +82,6 @@ public class JsonUtil {
      *         USE_DEFAULTS;
      */
     static {
-        mapper.setSerializationInclusion(JsonInclude.Include.ALWAYS);
+        OBJECT_MAPPER.setSerializationInclusion(JsonInclude.Include.ALWAYS);
     }
 }
