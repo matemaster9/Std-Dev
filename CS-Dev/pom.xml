@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>cs.matemaster</groupId>
+    <artifactId>CS-Dev</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>Sys-Log</module>
+        <module>CS-Dev-JDK</module>
+    </modules>
+
+    <properties>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+        <lang3.version>3.12.0</lang3.version>
+        <io.version>2.11.0</io.version>
+        <log4j.version>2.17.1</log4j.version>
+        <slf4j.version>1.7.32</slf4j.version>
+        <jackson.version>2.13.1</jackson.version>
+        <guava.version>31.0.1-jre</guava.version>
+    </properties>
+
+</project>

@@ -1,0 +1,25 @@
+Configuration:
+  name: YAMLConfigDemo
+  status: warn
+  properties:
+    property:
+      - name: log.patternLayout
+        value: "[%-5level] %d{yyyy-MM-dd HH:mm:ss} [%t] %c{1} - %msg%n"
+
+  Appenders:
+    Console:
+      name: StdOut
+      target: SYSTEM_OUT
+      PatternLayout:
+        Pattern: ${log.patternLayout}
+      Filters:
+        ThresholdFilter:
+          level: info
+          onMatch: ACCEPT
+          onMismatch: DENY
+
+  Loggers:
+    Root:
+      level: info
+      AppenderRef:
+        - ref: StdOut
