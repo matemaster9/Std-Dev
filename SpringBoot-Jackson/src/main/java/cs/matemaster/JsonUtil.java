@@ -25,11 +25,12 @@ public class JsonUtil {
         if (obj == null) {
             return null;
         }
-        ObjectMapper objectMapper = mapper.setSerializationInclusion(JsonInclude.Include.ALWAYS);
-        String result = null;
+        ObjectMapper objectMapper = mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        String result;
         try {
             result = objectMapper.writeValueAsString(obj);
         } catch (JsonProcessingException e) {
+            System.out.println(e.getMessage());
             return null;
         }
         return result;
@@ -39,5 +40,18 @@ public class JsonUtil {
         Student student = new Student("201808020125", "MateMaster", MajorEnum.COMPUTER_SCIENCE);
         String serialize = serialize(student);
         System.out.println(serialize);
+    }
+
+    /**
+     *         ALWAYS, 默认策略序列化全部内容
+     *         NON_NULL,
+     *         NON_ABSENT,
+     *         NON_EMPTY,
+     *         NON_DEFAULT,
+     *         CUSTOM,
+     *         USE_DEFAULTS;
+     */
+    static {
+        mapper.setSerializationInclusion(JsonInclude.Include.ALWAYS);
     }
 }
