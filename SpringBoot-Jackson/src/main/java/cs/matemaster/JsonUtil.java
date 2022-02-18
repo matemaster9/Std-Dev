@@ -40,4 +40,17 @@ public class JsonUtil {
         String serialize = serialize(student);
         System.out.println(serialize);
     }
+
+    /**
+     *         ALWAYS, 默认策略序列化全部内容
+     *         NON_NULL,
+     *         NON_ABSENT,
+     *         NON_EMPTY,
+     *         NON_DEFAULT,
+     *         CUSTOM,
+     *         USE_DEFAULTS;
+     */
+    static {
+        mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+    }
 }
